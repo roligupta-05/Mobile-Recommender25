@@ -350,9 +350,9 @@ export default function App() {
                     <span className="text-xs font-mono text-slate-400">PJ1 Dataset</span>
                   </div>
 
-                  <div className="relative h-60 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-800">
+                 <div className="relative h-60 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-800">
                     <img 
-                      src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80" 
+                      src="https://png.pngtree.com/background/20230524/original/pngtree-d-rendering-of-a-3d-android-phone-with-app-icons-on-picture-image_2711792.jpg"
                       alt="Featured Phone" 
                       className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500"
                     />
@@ -517,7 +517,7 @@ export default function App() {
 
                       <div className="flex flex-col sm:flex-row gap-6 items-start">
                         <div className="w-full sm:w-32 h-32 rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shrink-0 flex items-center justify-center p-2 relative">
-                          <img src={phone.image} alt={phone.name} className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform" />
+                          <img src="https://png.pngtree.com/background/20230524/original/pngtree-d-rendering-of-a-3d-android-phone-with-app-icons-on-picture-image_2711792.jpg" alt={phone.name} className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform" />
                           <div className="absolute bottom-1 right-1 text-white/50"><Smartphone className="w-3 h-3" /></div>
                         </div>
 
