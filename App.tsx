@@ -290,7 +290,7 @@ export default function App() {
       
       {/* Top Header */}
       <header className="bg-[#0D1322]/90 backdrop-blur-md border-b border-white/10 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col xl:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 rounded-xl font-bold shadow-lg shadow-emerald-500/20">
@@ -312,14 +312,14 @@ export default function App() {
             {comparedPhones.length > 0 && (
               <button 
                 onClick={() => setShowCompareModal(true)} 
-                className="md:hidden px-3 py-1.5 bg-emerald-500 text-slate-950 rounded-xl text-xs font-bold flex items-center gap-1 shadow-md"
+                className="xl:hidden px-3 py-1.5 bg-emerald-500 text-slate-950 rounded-xl text-xs font-bold flex items-center gap-1 shadow-md"
               >
                 <Scale className="w-3.5 h-3.5" /> ({comparedPhones.length})
               </button>
             )}
           </div>
 
-          <div className="relative w-full md:w-80">
+          <div className="relative w-full md:max-w-md xl:w-80">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input 
               type="text" 
@@ -335,7 +335,7 @@ export default function App() {
             )}
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             <button 
               onClick={() => window.print()} 
               className="px-3 py-2 bg-[#131B2E] hover:bg-[#1A243B] border border-white/10 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-1.5 transition-colors"
@@ -357,7 +357,7 @@ export default function App() {
       {/* Main Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <aside className="lg:col-span-4 space-y-5">
+        <aside className="lg:col-span-4 space-y-5 lg:self-start lg:sticky lg:top-24">
           <div className="bg-[#111827] border border-white/10 rounded-2xl p-5 shadow-xl">
             <h2 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3.5 flex items-center gap-2">
               <Layers className="w-4 h-4 text-emerald-400" /> Select Buyer Persona
@@ -441,11 +441,11 @@ export default function App() {
         </aside>
 
         <main className="lg:col-span-8 space-y-5">
-          <div className="flex items-center justify-between bg-[#111827] p-3 rounded-2xl border border-white/10 shadow-md overflow-x-auto gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-[#111827] p-3 rounded-2xl border border-white/10 shadow-md gap-3">
             <span className="text-xs text-slate-400 font-semibold px-2 flex items-center gap-1.5 whitespace-nowrap">
               <Tag className="w-3.5 h-3.5 text-emerald-400" /> Brand Filter:
             </span>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               {brands.map(brand => (
                 <button
                   key={brand}
@@ -548,7 +548,7 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="shrink-0 flex flex-col items-center justify-center bg-[#0D1322] p-3.5 rounded-2xl border border-white/10 min-w-[85px]">
+                      <div className="w-full sm:w-auto shrink-0 flex flex-row sm:flex-col items-center justify-between sm:justify-center bg-[#0D1322] px-4 py-2.5 sm:p-3.5 rounded-xl border border-white/10 sm:min-w-[85px]">
                         <div className="text-2xl font-black font-mono text-emerald-400">{phone.score}</div>
                         <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">WLC Match</span>
                       </div>
