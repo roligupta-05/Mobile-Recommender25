@@ -130,7 +130,6 @@ export default function App() {
 
   const phonesList: Phone[] = useMemo(() => datasetJson as Phone[], []);
 
-  // Recommendation Scoring Calculation (Min-Max + WLC)
   const recommendations = useMemo(() => {
     let filtered = phonesList.filter(p => p.price <= maxBudget);
 
@@ -271,15 +270,14 @@ export default function App() {
       {/* Main Content Sections */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         
-        {/* ================= HOME / HERO TAB ================= */}
+        {/* HOME / HERO TAB */}
         {activeTab === 'home' && (
           <div className="space-y-16 py-6">
             
-            {/* Hero Section */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
                 <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-sm">
-                  <Zap className="w-3.5 h-3.5" /> Powered by 413 Verified Smartphones Dataset[cite: 7]
+                  <Zap className="w-3.5 h-3.5" /> Powered by 413 Verified Smartphones Dataset
                 </span>
                 
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08]">
@@ -287,7 +285,7 @@ export default function App() {
                 </h1>
                 
                 <p className={`text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Move beyond basic price filters. Our weighted scoring engine evaluates 413 real models across camera, RAM, battery, and storage to rank top devices for your exact needs[cite: 7].
+                  Move beyond basic price filters. Our weighted scoring engine evaluates 413 real models across camera, RAM, battery, and storage to rank top devices for your exact needs.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
@@ -321,7 +319,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Hero Featured Visual Card */}
               <div className="lg:col-span-5 relative">
                 <div className="absolute -inset-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
                 <div className={`relative p-6 rounded-3xl border backdrop-blur-xl space-y-6 ${darkMode ? 'bg-[#111827]/90 border-slate-800' : 'bg-white border-slate-200 shadow-xl'}`}>
@@ -360,7 +357,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Persona Showcase Grid */}
             <div className="space-y-6 pt-8">
               <div className="text-center space-y-2 max-w-xl mx-auto">
                 <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Select Your Buyer Persona</h2>
@@ -397,11 +393,10 @@ export default function App() {
           </div>
         )}
 
-        {/* ================= RECOMMENDATIONS TAB ================= */}
+        {/* RECOMMENDATIONS TAB */}
         {activeTab === 'recommendations' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-4">
             
-            {/* Sidebar Filters */}
             <aside className="lg:col-span-4 space-y-6">
               <div className={`p-6 rounded-3xl border space-y-5 ${darkMode ? 'bg-[#111827] border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
                 <h3 className="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-emerald-400">
@@ -452,7 +447,6 @@ export default function App() {
               </div>
             </aside>
 
-            {/* Recommendations List */}
             <main className="lg:col-span-8 space-y-5">
               <div className="flex items-center justify-between pb-2">
                 <div>
@@ -537,13 +531,13 @@ export default function App() {
           </div>
         )}
 
-        {/* ================= DISCOVER TAB ================= */}
+        {/* DISCOVER TAB */}
         {activeTab === 'discover' && (
           <div className="space-y-6 py-4">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div>
                 <h2 className="text-2xl font-black tracking-tight">Smartphone Directory</h2>
-                <p className="text-xs text-slate-400">Explore all 413 devices loaded from PJ1_Dataset.xlsx[cite: 7].</p>
+                <p className="text-xs text-slate-400">Explore all 413 devices loaded from PJ1_Dataset.xlsx.</p>
               </div>
 
               <div className="flex items-center gap-3 w-full md:w-auto">
@@ -597,7 +591,7 @@ export default function App() {
           </div>
         )}
 
-        {/* ================= COMPARE TAB ================= */}
+        {/* COMPARE TAB */}
         {activeTab === 'compare' && (
           <div className="space-y-6 py-4">
             <h2 className="text-2xl font-black flex items-center gap-2">
@@ -635,15 +629,15 @@ export default function App() {
           </div>
         )}
 
-        {/* ================= ABOUT TAB ================= */}
+        {/* ABOUT TAB */}
         {activeTab === 'about' && (
           <div className={`p-8 sm:p-12 rounded-3xl border space-y-6 max-w-3xl mx-auto my-6 ${darkMode ? 'bg-[#111827] border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
             <h2 className="text-2xl font-black text-emerald-400">About MobileFinder Pro Engine</h2>
             <p className="text-sm leading-relaxed text-slate-400">
-              MobileFinder Pro was developed as part of the Samsung Innovation Campus (SIC) curriculum[cite: 7]. It solves e-commerce choice overload by transforming user lifestyle requirements into mathematical weight vectors, ranking 413 real smartphone models via Min-Max Feature Scaling and Weighted Linear Combination[cite: 7].
+              MobileFinder Pro was developed as part of the Samsung Innovation Campus (SIC) curriculum. It solves e-commerce choice overload by transforming user lifestyle requirements into mathematical weight vectors, ranking 413 real smartphone models via Min-Max Feature Scaling and Weighted Linear Combination.
             </p>
             <div className="text-xs text-slate-400 space-y-2 pt-4 border-t border-slate-800 font-mono">
-              <div className="flex justify-between"><span>Dataset Source:</span> <strong className="text-slate-200">PJ1_Dataset.xlsx (413 rows, 11 columns)</strong>[cite: 7]</div>
+              <div className="flex justify-between"><span>Dataset Source:</span> <strong className="text-slate-200">PJ1_Dataset.xlsx (413 rows, 11 columns)</strong></div>
               <div className="flex justify-between"><span>Normalization:</span> <strong className="text-slate-200">Min-Max Feature Scaling</strong></div>
               <div className="flex justify-between"><span>Ranking Algorithm:</span> <strong className="text-slate-200">Weighted Linear Combination (WLC)</strong></div>
             </div>
