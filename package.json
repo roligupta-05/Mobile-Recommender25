@@ -1,7 +1,7 @@
 {
   "name": "mobile-recommender25",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000M\u0000o\u0000b\u0000i\u0000l\u0000e\u0000-\u0000R\u0000e\u0000c\u0000o\u0000m\u0000m\u0000e\u0000n\u0000d\u0000e\u0000r\u00002\u00005\u0000\r\u0000 \u0000#\u0000 \u0000M\u0000o\u0000b\u0000i\u0000l\u0000e\u0000-\u0000R\u0000e\u0000c\u0000o\u0000m\u0000m\u0000e\u0000n\u0000d\u0000e\u0000r\u00002\u00005\u0000\r\u0000 \u0000",
+  "description": "Mobile-Recommender25",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,14 +23,17 @@
     "@tailwindcss/vite": "^4.3.3",
     "lucide-react": "^1.64.0",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "tailwindcss": "^4.3.3"
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.6.2",
+    "postcss": "^8.5.32",
+    "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5"
   }
