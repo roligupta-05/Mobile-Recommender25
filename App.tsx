@@ -17,7 +17,9 @@ import {
   X,
   Printer,
   Tag,
-  Check
+  Check,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface Phone {
@@ -216,6 +218,7 @@ const BUYER_PERSONAS: Record<string, { title: string; desc: string; weights: { p
 };
 
 export default function App() {
+  const [darkMode, setDarkMode] = useState<boolean>(true);
   const [selectedPersona, setSelectedPersona] = useState<string>('balanced');
   const [maxBudget, setMaxBudget] = useState<number>(150000);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -286,11 +289,11 @@ export default function App() {
   }, [maxBudget, weights, selectedBrand, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 font-sans">
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-[#090D16] text-slate-100' : 'bg-[#F8FAFC] text-slate-900'}`}>
       
       {/* Top Header */}
-      <header className="bg-[#0D1322]/90 backdrop-blur-md border-b border-white/10 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col xl:flex-row items-center justify-between gap-4">
+      <header className={`backdrop-blur-md border-b sticky top-0 z-40 transition-colors duration-300 ${darkMode ? 'bg-[#0D1322]/90 border-white/10' : 'bg-white/90 border-slate-200 shadow-sm'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 rounded-xl font-bold shadow-lg shadow-emerald-500/20">
@@ -298,35 +301,48 @@ export default function App() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">
+                  <h1 className={`text-base sm:text-lg font-bold tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                     Mobile Finder Pro
                   </h1>
-                  <span className="bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20 uppercase tracking-wider">
+                  <span className="bg-emerald-500/10 text-emerald-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/20 uppercase tracking-wider">
                     WLC Engine
                   </span>
                 </div>
-                <p className="text-xs text-slate-400">Algorithmic Smartphone Selection & Comparison</p>
+                <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Algorithmic Smartphone Selection & Comparison</p>
               </div>
             </div>
 
-            {comparedPhones.length > 0 && (
+            <div className="flex items-center gap-2 md:hidden">
               <button 
-                onClick={() => setShowCompareModal(true)} 
-                className="xl:hidden px-3 py-1.5 bg-emerald-500 text-slate-950 rounded-xl text-xs font-bold flex items-center gap-1 shadow-md"
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2 rounded-xl border transition-all ${darkMode ? 'bg-[#131B2E] border-white/10 text-amber-400' : 'bg-slate-100 border-slate-200 text-slate-700'}`}
+                title="Toggle Theme"
               >
-                <Scale className="w-3.5 h-3.5" /> ({comparedPhones.length})
+                {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
-            )}
+              {comparedPhones.length > 0 && (
+                <button 
+                  onClick={() => setShowCompareModal(true)} 
+                  className="px-3 py-1.5 bg-emerald-500 text-slate-950 rounded-xl text-xs font-bold flex items-center gap-1 shadow-md"
+                >
+                  <Scale className="w-3.5 h-3.5" /> ({comparedPhones.length})
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="relative w-full md:max-w-md xl:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative w-full md:w-80">
+            <Search className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${darkMode ? 'text-slate-400' : 'text-slate-400'}`} />
             <input 
               type="text" 
               placeholder="Search by brand or model..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-[#131B2E] border border-white/10 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-all shadow-inner"
+              className={`w-full pl-9 pr-4 py-2 border rounded-xl text-xs transition-all shadow-inner focus:outline-none focus:border-emerald-500 ${
+                darkMode 
+                  ? 'bg-[#131B2E] border-white/10 text-slate-200 placeholder-slate-500' 
+                  : 'bg-slate-50 border-slate-200 text-slate-800 placeholder-slate-400'
+              }`}
             />
             {searchQuery && (
               <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200">
@@ -335,12 +351,27 @@ export default function App() {
             )}
           </div>
 
-          <div className="hidden xl:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              className={`p-2.5 rounded-xl border transition-all flex items-center gap-1.5 text-xs font-semibold ${
+                darkMode 
+                  ? 'bg-[#131B2E] border-white/10 text-amber-400 hover:bg-[#1A243B]' 
+                  : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
+              }`}
+              title="Toggle Light/Dark Theme"
+            >
+              {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+            </button>
+
             <button 
               onClick={() => window.print()} 
-              className="px-3 py-2 bg-[#131B2E] hover:bg-[#1A243B] border border-white/10 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-1.5 transition-colors"
+              className={`px-3 py-2 border rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                darkMode ? 'bg-[#131B2E] hover:bg-[#1A243B] border-white/10 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+              }`}
             >
-              <Printer className="w-3.5 h-3.5 text-emerald-400" /> Print / Export
+              <Printer className="w-3.5 h-3.5 text-emerald-500" /> Print
             </button>
             {comparedPhones.length > 0 && (
               <button 
@@ -357,10 +388,11 @@ export default function App() {
       {/* Main Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <aside className="lg:col-span-4 space-y-5 lg:self-start lg:sticky lg:top-24">
-          <div className="bg-[#111827] border border-white/10 rounded-2xl p-5 shadow-xl">
-            <h2 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3.5 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-emerald-400" /> Select Buyer Persona
+        {/* Left Sidebar Controls */}
+        <aside className="lg:col-span-4 space-y-5">
+          <div className={`border rounded-2xl p-5 shadow-xl transition-colors duration-300 ${darkMode ? 'bg-[#111827] border-white/10' : 'bg-white border-slate-200'}`}>
+            <h2 className={`text-xs font-bold uppercase tracking-wider mb-3.5 flex items-center gap-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+              <Layers className="w-4 h-4 text-emerald-500" /> Select Buyer Persona
             </h2>
             <div className="grid grid-cols-1 gap-2">
               {Object.entries(BUYER_PERSONAS).map(([key, persona]) => {
@@ -371,27 +403,27 @@ export default function App() {
                     onClick={() => handlePersonaSelect(key)}
                     className={`p-3 text-left rounded-xl border transition-all text-xs relative ${
                       isActive 
-                        ? 'bg-[#182238] border-emerald-500 text-white shadow-md' 
-                        : 'bg-[#131B2E]/50 border-white/5 text-slate-400 hover:border-white/15 hover:text-slate-200'
+                        ? darkMode ? 'bg-[#182238] border-emerald-500 text-white shadow-md' : 'bg-emerald-50 border-emerald-500 text-slate-900 shadow-sm' 
+                        : darkMode ? 'bg-[#131B2E]/50 border-white/5 text-slate-400 hover:border-white/15 hover:text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`font-bold text-sm ${isActive ? 'text-emerald-400' : 'text-slate-200'}`}>{persona.title}</span>
-                      {isActive && <Check className="w-3.5 h-3.5 text-emerald-400" />}
+                      <span className={`font-bold text-sm ${isActive ? 'text-emerald-500' : darkMode ? 'text-slate-200' : 'text-slate-800'}`}>{persona.title}</span>
+                      {isActive && <Check className="w-3.5 h-3.5 text-emerald-500" />}
                     </div>
-                    <p className="text-[11px] text-slate-400 mt-0.5">{persona.desc}</p>
+                    <p className={`text-[11px] mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>{persona.desc}</p>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="bg-[#111827] border border-white/10 rounded-2xl p-5 shadow-xl space-y-4">
+          <div className={`border rounded-2xl p-5 shadow-xl space-y-4 transition-colors duration-300 ${darkMode ? 'bg-[#111827] border-white/10' : 'bg-white border-slate-200'}`}>
             <div className="flex justify-between items-center">
-              <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <IndianRupee className="w-4 h-4 text-emerald-400" /> Max Budget Filter
+              <label className={`text-xs font-bold uppercase tracking-wider flex items-center gap-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                <IndianRupee className="w-4 h-4 text-emerald-500" /> Max Budget Filter
               </label>
-              <span className="text-sm font-mono font-extrabold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+              <span className="text-sm font-mono font-extrabold text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
                 ₹{maxBudget.toLocaleString('en-IN')}
               </span>
             </div>
@@ -399,53 +431,54 @@ export default function App() {
               type="range" min={30000} max={150000} step={5000}
               value={maxBudget}
               onChange={(e) => setMaxBudget(Number(e.target.value))}
-              className="w-full accent-emerald-500 bg-slate-800 rounded-lg h-2 cursor-pointer"
+              className="w-full accent-emerald-500 bg-slate-200 dark:bg-slate-800 rounded-lg h-2 cursor-pointer"
             />
           </div>
 
-          <div className="bg-[#111827] border border-white/10 rounded-2xl p-5 shadow-xl space-y-4">
-            <h2 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-emerald-400" /> WLC Attribute Weights
+          <div className={`border rounded-2xl p-5 shadow-xl space-y-4 transition-colors duration-300 ${darkMode ? 'bg-[#111827] border-white/10' : 'bg-white border-slate-200'}`}>
+            <h2 className={`text-xs font-bold uppercase tracking-wider flex items-center gap-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+              <Sliders className="w-4 h-4 text-emerald-500" /> WLC Attribute Weights
             </h2>
             <div className="space-y-3.5">
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="flex items-center gap-1.5 text-slate-300"><Cpu className="w-3.5 h-3.5 text-blue-400" /> Performance</span>
-                  <span className="font-mono text-emerald-400">{Math.round(weights.performance * 100)}%</span>
+                  <span className={`flex items-center gap-1.5 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Cpu className="w-3.5 h-3.5 text-blue-500" /> Performance</span>
+                  <span className="font-mono text-emerald-500">{Math.round(weights.performance * 100)}%</span>
                 </div>
-                <input type="range" min={0} max={1} step={0.05} value={weights.performance} onChange={(e) => setWeights({ ...weights, performance: parseFloat(e.target.value) })} className="w-full accent-blue-500 bg-slate-800 h-1.5 rounded-lg" />
+                <input type="range" min={0} max={1} step={0.05} value={weights.performance} onChange={(e) => setWeights({ ...weights, performance: parseFloat(e.target.value) })} className="w-full accent-blue-500 bg-slate-200 dark:bg-slate-800 h-1.5 rounded-lg" />
               </div>
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="flex items-center gap-1.5 text-slate-300"><Camera className="w-3.5 h-3.5 text-emerald-400" /> Camera</span>
-                  <span className="font-mono text-emerald-400">{Math.round(weights.camera * 100)}%</span>
+                  <span className={`flex items-center gap-1.5 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Camera className="w-3.5 h-3.5 text-emerald-500" /> Camera</span>
+                  <span className="font-mono text-emerald-500">{Math.round(weights.camera * 100)}%</span>
                 </div>
-                <input type="range" min={0} max={1} step={0.05} value={weights.camera} onChange={(e) => setWeights({ ...weights, camera: parseFloat(e.target.value) })} className="w-full accent-emerald-500 bg-slate-800 h-1.5 rounded-lg" />
+                <input type="range" min={0} max={1} step={0.05} value={weights.camera} onChange={(e) => setWeights({ ...weights, camera: parseFloat(e.target.value) })} className="w-full accent-emerald-500 bg-slate-200 dark:bg-slate-800 h-1.5 rounded-lg" />
               </div>
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="flex items-center gap-1.5 text-slate-300"><Battery className="w-3.5 h-3.5 text-purple-400" /> Battery</span>
-                  <span className="font-mono text-emerald-400">{Math.round(weights.battery * 100)}%</span>
+                  <span className={`flex items-center gap-1.5 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Battery className="w-3.5 h-3.5 text-purple-500" /> Battery</span>
+                  <span className="font-mono text-emerald-500">{Math.round(weights.battery * 100)}%</span>
                 </div>
-                <input type="range" min={0} max={1} step={0.05} value={weights.battery} onChange={(e) => setWeights({ ...weights, battery: parseFloat(e.target.value) })} className="w-full accent-purple-500 bg-slate-800 h-1.5 rounded-lg" />
+                <input type="range" min={0} max={1} step={0.05} value={weights.battery} onChange={(e) => setWeights({ ...weights, battery: parseFloat(e.target.value) })} className="w-full accent-purple-500 bg-slate-200 dark:bg-slate-800 h-1.5 rounded-lg" />
               </div>
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="flex items-center gap-1.5 text-slate-300"><Monitor className="w-3.5 h-3.5 text-amber-400" /> Display</span>
-                  <span className="font-mono text-emerald-400">{Math.round(weights.display * 100)}%</span>
+                  <span className={`flex items-center gap-1.5 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}><Monitor className="w-3.5 h-3.5 text-amber-500" /> Display</span>
+                  <span className="font-mono text-emerald-500">{Math.round(weights.display * 100)}%</span>
                 </div>
-                <input type="range" min={0} max={1} step={0.05} value={weights.display} onChange={(e) => setWeights({ ...weights, display: parseFloat(e.target.value) })} className="w-full accent-amber-500 bg-slate-800 h-1.5 rounded-lg" />
+                <input type="range" min={0} max={1} step={0.05} value={weights.display} onChange={(e) => setWeights({ ...weights, display: parseFloat(e.target.value) })} className="w-full accent-amber-500 bg-slate-200 dark:bg-slate-800 h-1.5 rounded-lg" />
               </div>
             </div>
           </div>
         </aside>
 
+        {/* Right Main Content */}
         <main className="lg:col-span-8 space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-[#111827] p-3 rounded-2xl border border-white/10 shadow-md gap-3">
-            <span className="text-xs text-slate-400 font-semibold px-2 flex items-center gap-1.5 whitespace-nowrap">
-              <Tag className="w-3.5 h-3.5 text-emerald-400" /> Brand Filter:
+          <div className={`p-3 rounded-2xl border shadow-sm overflow-x-auto flex items-center justify-between gap-2 transition-colors duration-300 ${darkMode ? 'bg-[#111827] border-white/10' : 'bg-white border-slate-200'}`}>
+            <span className={`text-xs font-semibold px-2 flex items-center gap-1.5 whitespace-nowrap ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+              <Tag className="w-3.5 h-3.5 text-emerald-500" /> Brand Filter:
             </span>
-            <div className="flex items-center gap-1.5 flex-wrap">
+            <div className="flex items-center gap-1.5">
               {brands.map(brand => (
                 <button
                   key={brand}
@@ -453,7 +486,7 @@ export default function App() {
                   className={`px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                     selectedBrand === brand
                       ? 'bg-emerald-500 text-slate-950 shadow-md'
-                      : 'bg-[#131B2E] text-slate-400 border border-white/5 hover:text-slate-200'
+                      : darkMode ? 'bg-[#131B2E] text-slate-400 border border-white/5 hover:text-slate-200' : 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 hover:text-slate-900'
                   }`}
                 >
                   {brand}
@@ -463,18 +496,18 @@ export default function App() {
           </div>
 
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Award className="w-4 h-4 text-emerald-400" /> Ranked Recommendations
+            <h2 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+              <Award className="w-4 h-4 text-emerald-500" /> Ranked Recommendations
             </h2>
-            <span className="text-xs text-slate-400 font-mono">
-              Found <strong className="text-emerald-400">{recommendations.length}</strong> devices
+            <span className={`text-xs font-mono ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              Found <strong className="text-emerald-500">{recommendations.length}</strong> devices
             </span>
           </div>
 
           {recommendations.length === 0 ? (
-            <div className="bg-[#111827] p-12 text-center rounded-2xl border border-white/10 space-y-3">
-              <Info className="w-10 h-10 text-slate-600 mx-auto" />
-              <h3 className="text-base font-bold text-slate-300">No smartphones match your filters.</h3>
+            <div className={`p-12 text-center rounded-2xl border space-y-3 ${darkMode ? 'bg-[#111827] border-white/10' : 'bg-white border-slate-200'}`}>
+              <Info className="w-10 h-10 text-slate-400 mx-auto" />
+              <h3 className={`text-base font-bold ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>No smartphones match your filters.</h3>
             </div>
           ) : (
             <div className="space-y-4">
@@ -483,10 +516,10 @@ export default function App() {
                 return (
                   <div 
                     key={phone.id} 
-                    className={`bg-[#111827] rounded-2xl border transition-all duration-300 overflow-hidden relative group ${
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden relative group ${
                       idx === 0 
-                        ? 'border-emerald-500/60 shadow-xl bg-gradient-to-r from-[#111827] via-[#111827] to-[#151F33]' 
-                        : 'border-white/10'
+                        ? darkMode ? 'border-emerald-500/60 shadow-xl bg-gradient-to-r from-[#111827] via-[#111827] to-[#151F33]' : 'border-emerald-500 shadow-lg bg-gradient-to-r from-white via-white to-emerald-50/30' 
+                        : darkMode ? 'bg-[#111827] border-white/10' : 'bg-white border-slate-200'
                     }`}
                   >
                     {idx === 0 && (
@@ -496,9 +529,9 @@ export default function App() {
                     )}
 
                     <div className="p-5 flex flex-col sm:flex-row gap-5 items-start">
-                      <div className="relative w-full sm:w-36 h-36 bg-[#0D1322] rounded-xl overflow-hidden shrink-0 border border-white/10 flex items-center justify-center p-2">
+                      <div className={`relative w-full sm:w-36 h-36 rounded-xl overflow-hidden shrink-0 border flex items-center justify-center p-2 ${darkMode ? 'bg-[#0D1322] border-white/10' : 'bg-slate-100 border-slate-200'}`}>
                         <img src={phone.image} alt={phone.name} className="w-full h-full object-cover rounded-lg" />
-                        <span className="absolute top-2 left-2 bg-[#090D16]/80 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-md border border-white/10">
+                        <span className={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-md border backdrop-blur-md ${darkMode ? 'bg-[#090D16]/80 text-emerald-400 border-white/10' : 'bg-white/90 text-emerald-600 border-slate-200'}`}>
                           {phone.badge}
                         </span>
                       </div>
@@ -506,31 +539,31 @@ export default function App() {
                       <div className="flex-1 space-y-2.5 w-full">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">{phone.brand}</span>
-                            <span className="text-slate-600">•</span>
-                            <div className="flex items-center gap-1 text-xs text-amber-400 font-bold">
-                              <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {phone.rating}
+                            <span className="text-xs font-bold text-emerald-500 uppercase tracking-wider">{phone.brand}</span>
+                            <span className="text-slate-400">•</span>
+                            <div className="flex items-center gap-1 text-xs text-amber-500 font-bold">
+                              <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> {phone.rating}
                             </div>
                           </div>
-                          <h3 className="text-base sm:text-lg font-bold text-slate-100">{phone.name}</h3>
+                          <h3 className={`text-base sm:text-lg font-bold ${darkMode ? 'text-slate-100' : 'text-slate-900'}`}>{phone.name}</h3>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 bg-[#0D1322]/80 p-2.5 rounded-xl border border-white/5">
-                          <div><span className="text-slate-500">Processor:</span> {phone.specs.processor}</div>
-                          <div><span className="text-slate-500">Camera:</span> {phone.specs.mainCam}</div>
-                          <div><span className="text-slate-500">Display:</span> {phone.specs.display}</div>
-                          <div><span className="text-slate-500">Battery:</span> {phone.specs.battery}</div>
+                        <div className={`grid grid-cols-2 gap-2 text-[11px] p-2.5 rounded-xl border ${darkMode ? 'bg-[#0D1322]/80 border-white/5 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
+                          <div><span className="text-slate-400">Processor:</span> {phone.specs.processor}</div>
+                          <div><span className="text-slate-400">Camera:</span> {phone.specs.mainCam}</div>
+                          <div><span className="text-slate-400">Display:</span> {phone.specs.display}</div>
+                          <div><span className="text-slate-400">Battery:</span> {phone.specs.battery}</div>
                         </div>
 
                         <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
                           <div className="flex items-baseline gap-2">
-                            <span className="text-lg sm:text-xl font-extrabold text-slate-100 font-mono">
+                            <span className={`text-lg sm:text-xl font-extrabold font-mono ${darkMode ? 'text-slate-100' : 'text-slate-900'}`}>
                               ₹{phone.price.toLocaleString('en-IN')}
                             </span>
-                            <span className="text-xs text-slate-500 line-through font-mono">
+                            <span className="text-xs text-slate-400 line-through font-mono">
                               ₹{phone.originalPrice.toLocaleString('en-IN')}
                             </span>
-                            <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                            <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
                               {phone.discount}
                             </span>
                           </div>
@@ -539,8 +572,8 @@ export default function App() {
                             onClick={() => toggleCompare(phone)}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                               isCompared 
-                                ? 'bg-emerald-500 text-slate-950' 
-                                : 'bg-[#151F33] hover:bg-[#1A253D] text-slate-300 border border-white/10'
+                                ? 'bg-emerald-500 text-slate-950 shadow-md' 
+                                : darkMode ? 'bg-[#151F33] hover:bg-[#1A253D] text-slate-300 border border-white/10' : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
                             }`}
                           >
                             <Scale className="w-3.5 h-3.5" /> {isCompared ? 'Compared' : 'Compare'}
@@ -548,9 +581,9 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="w-full sm:w-auto shrink-0 flex flex-row sm:flex-col items-center justify-between sm:justify-center bg-[#0D1322] px-4 py-2.5 sm:p-3.5 rounded-xl border border-white/10 sm:min-w-[85px]">
-                        <div className="text-2xl font-black font-mono text-emerald-400">{phone.score}</div>
-                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">WLC Match</span>
+                      <div className={`shrink-0 flex flex-col items-center justify-center p-3.5 rounded-2xl border min-w-[85px] ${darkMode ? 'bg-[#0D1322] border-white/10' : 'bg-slate-50 border-slate-200'}`}>
+                        <div className="text-2xl font-black font-mono text-emerald-500">{phone.score}</div>
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">WLC Match</span>
                       </div>
                     </div>
                   </div>
@@ -563,10 +596,10 @@ export default function App() {
 
       {showCompareModal && comparedPhones.length > 0 && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-[#111827] border border-white/10 w-full max-w-3xl rounded-2xl p-6 shadow-2xl relative space-y-5">
-            <div className="flex justify-between items-center border-b border-white/10 pb-4">
-              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <Scale className="w-4 h-4 text-emerald-400" /> Side-by-Side Spec Comparison
+          <div className={`border w-full max-w-3xl rounded-2xl p-6 shadow-2xl relative space-y-5 ${darkMode ? 'bg-[#111827] border-white/10 text-slate-100' : 'bg-white border-slate-200 text-slate-900'}`}>
+            <div className="flex justify-between items-center border-b pb-4 border-slate-200 dark:border-white/10">
+              <h3 className="text-sm font-bold flex items-center gap-2">
+                <Scale className="w-4 h-4 text-emerald-500" /> Side-by-Side Spec Comparison
               </h3>
               <button onClick={() => setShowCompareModal(false)} className="text-slate-400 hover:text-slate-200">
                 <X className="w-5 h-5" />
@@ -575,19 +608,19 @@ export default function App() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {comparedPhones.map(phone => (
-                <div key={phone.id} className="bg-[#0D1322] p-4 rounded-xl border border-white/10 space-y-3">
+                <div key={phone.id} className={`p-4 rounded-xl border space-y-3 ${darkMode ? 'bg-[#0D1322] border-white/10' : 'bg-slate-50 border-slate-200'}`}>
                   <img src={phone.image} alt={phone.name} className="w-full h-32 object-cover rounded-lg" />
                   <div>
-                    <h4 className="font-bold text-slate-100 text-sm">{phone.name}</h4>
-                    <p className="text-emerald-400 font-mono font-bold text-xs mt-0.5">₹{phone.price.toLocaleString('en-IN')}</p>
+                    <h4 className="font-bold text-sm">{phone.name}</h4>
+                    <p className="text-emerald-500 font-mono font-bold text-xs mt-0.5">₹{phone.price.toLocaleString('en-IN')}</p>
                   </div>
-                  <div className="space-y-1.5 text-xs text-slate-300 border-t border-white/10 pt-2">
+                  <div className="space-y-1.5 text-xs border-t pt-2 border-slate-200 dark:border-white/10">
                     <p><strong>Processor:</strong> {phone.specs.processor}</p>
                     <p><strong>Camera:</strong> {phone.specs.mainCam}</p>
                     <p><strong>Display:</strong> {phone.specs.display}</p>
                     <p><strong>Battery:</strong> {phone.specs.battery}</p>
                     <p><strong>Weight:</strong> {phone.weight}</p>
-                    <p className="text-emerald-400 font-mono font-bold pt-1"><strong>WLC Score:</strong> {phone.score}/100</p>
+                    <p className="text-emerald-500 font-mono font-bold pt-1"><strong>WLC Score:</strong> {phone.score}/100</p>
                   </div>
                 </div>
               ))}
@@ -596,7 +629,7 @@ export default function App() {
             <div className="text-right">
               <button 
                 onClick={() => setShowCompareModal(false)} 
-                className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl"
+                className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-md"
               >
                 Close Comparison
               </button>
