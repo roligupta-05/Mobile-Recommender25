@@ -1,1 +1,81 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================
+   ELEGANT TYPOGRAPHY & AMBIENT BACKGROUND
+   ========================================== */
+
+:root {
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Headings Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.025em;
+}
+
+/* ------------------------------------------
+   VIBRANT AMBIENT BACKGROUNDS & MESH GRADIENTS
+   ------------------------------------------ */
+
+/* Dark Mode Vibrant Mesh Background */
+.bg-\[\#07090E\] {
+  background-color: #07090e !important;
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+    radial-gradient(at 90% 20%, rgba(20, 184, 166, 0.10) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, rgba(99, 102, 241, 0.06) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Light Mode Subtle Emerald-Cyan Mesh Background */
+.bg-\[\#F8FAFC\] {
+  background-color: #f8fafc !important;
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(16, 185, 129, 0.07) 0px, transparent 50%),
+    radial-gradient(at 90% 15%, rgba(14, 165, 233, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, rgba(168, 85, 247, 0.04) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Refined Frosted Card Glassmorphism */
+.backdrop-blur-xl, .backdrop-blur-md {
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Smooth Interactive Hover Effects & Subtle Borders */
+.border-slate-800\/80 {
+  border-color: rgba(30, 41, 59, 0.7) !important;
+}
+
+/* Custom Scrollbar for Clean UI */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.5);
+}
